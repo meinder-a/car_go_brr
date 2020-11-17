@@ -37,13 +37,13 @@
             let currentGas = maxGas;
 
             setInterval(function () {
-                if (driving) {
-                    if (currentGas <= 0) {
-                        trigger();
-                        return;
-                    }
+                if (currentGas <= 0) {
+                    trigger();
+                    return;
+                }
 
-                    currentGas -= 0.5;
+                if (driving) {
+                    currentGas -= 1.5;
                     if (currentGas < 0) {
                         currentGas = 0;
                     }
@@ -64,6 +64,10 @@
 
             function trigger(initial = false)
             {
+                if (currentGas <= 0 && !driving) {
+                    return;
+                }
+
                 toggleAnimation('front-wheel');
                 toggleAnimation('back-wheel');
 
