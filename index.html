@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>car go brr</title>
+        <link rel="stylesheet" href="css/app.css">
+    </head>
+
+    <body>
+        <div class="hero">
+            <div class="road"></div>
+            <div id="city" class="city"></div>
+
+            <div class="top-panel">
+                <div class="actions">
+                    <button id="toggle">toggle</button>
+                    <button id="refuelCar">refuel</button>
+                </div>
+
+                <div id="gasProgress">
+                    <div id="gasBar"></div>
+                </div>
+            </div>
+
+            <div class="car">
+                <img alt="car" src="images/tesla.png">
+            </div>
+
+            <div class="wheel">
+                <img alt="back wheel" class="back-wheel" id="back-wheel" src="images/new_wheel.png">
+                <img alt="front wheel" class="front-wheel" id="front-wheel" src="images/new_wheel.png">
+            </div>
+        </div>
+
+        <script>
+            let driving = true;
+            let maxGas = 100;
+            let currentGas = maxGas;
+
+            setInterval(function () {
+                if (driving) {
+                    if (currentGas <= 0) {
+                        trigger();
+                        return;
+                    }
+
+                    currentGas -= 0.5;
+                    if (currentGas < 0) {
+                        currentGas = 0;
+                    }
+
+                    updateGasProgressBar();
+                }
+            }, 100);
+
+            var car = document.getElementById('toggle');
+            car.addEventListener('click', function () {
+                trigger();
+            })
+
+            var refuel = document.getElementById('refuelCar');
+            refuel.addEventListener('click', function (event) {
+                updateGasProgressBar(maxGas);
+            });
+
+            function trigger(initial = false)
+            {
+                toggleAnimation('front-wheel');
+                toggleAnimation('back-wheel');
+
+                toggleAnimation('city');
+
+                driving = initial ? false : !driving;
+            }
+
+            function toggleAnimation(id) {
+                state = document.getElementById(id).style.animationPlayState === 'paused' ? 'running' : 'paused';
+                document.getElementById(id).style.animationPlayState = state;
+            }
+
+            function updateGasProgressBar(amount = null) {
+                if (amount != null) {
+                    currentGas = amount;
+                }
+                document.getElementById('gasBar').style.height = (100 - (currentGas)) + "%";
+            }
+
+            trigger(true);
+        </script>
+    </body>
+</html>
