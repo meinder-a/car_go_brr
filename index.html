@@ -12,13 +12,17 @@
 
             <div class="top-panel">
                 <div class="actions">
-                    <button id="toggle">toggle</button>
-                    <button id="refuelCar">refuel</button>
+                    <button id="toggle">ON/OFF</button>
+                    <button id="refuelCar">Refuel</button>
                 </div>
 
                 <div id="gasProgress">
+                    <div class="gasInfo">
+                        <span id="currentGasValue"></span>/<span id="maxGasValue"></span>
+                    </div>
                     <div id="gasBar"></div>
                 </div>
+
             </div>
 
             <div class="car">
@@ -32,11 +36,14 @@
         </div>
 
         <script>
-            let driving = true;
+            let driving = false;
             let maxGas = 100;
             let currentGas = maxGas;
 
             setInterval(function () {
+                document.getElementById('maxGasValue').textContent = maxGas;
+                document.getElementById('currentGasValue').textContent = currentGas.toFixed();
+
                 if (currentGas <= 0) {
                     trigger();
                     return;
@@ -85,10 +92,13 @@
                 if (amount != null) {
                     currentGas = amount;
                 }
-                document.getElementById('gasBar').style.height = (100 - (currentGas)) + "%";
+
+                let percentage = currentGas * 100 / maxGas;
+                document.getElementById('gasBar').style.height = 100 - percentage + "%";
             }
 
             trigger(true);
+            updateGasProgressBar();
         </script>
     </body>
 </html>

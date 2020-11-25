@@ -142,5 +142,10 @@ button {
 
 .top-panel > #gasProgress {
     float: right;
-    margin: 10px;
+    margin: 25px;
+}
+
+.gasInfo {
+    float: right;
+    margin-top: -20px;
 }
